@@ -1,28 +1,24 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { MoviesContext } from "../../contexts/contextMovies"; // Certifique-se de que o caminho está correto
-
-interface Movie {
-  id: number;
-  title: string;
-}
+import MoviesCards from "./MoviesCards";
+import { Movie } from "../../types/Movies";
 
 const Movies = () => {
-  // Acessando o contexto apenas uma vez
   const moviesContext = useContext(MoviesContext);
 
   if (!moviesContext) {
     throw new Error("MoviesContext deve ser usado dentro de um MoviesProvider");
   }
 
-  const { setMoviesCount } = moviesContext; // Desestruturando a função do contexto
-  const [movies, setMovies] = useState<Movie[]>([]); // Estado para armazenar os filmes
+  const { setMoviesCount } = moviesContext;
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     const getMovies = async () => {
       try {
         const res = await axios.get(
-          "https://api.themoviedb.org/3/discover/movie",
+          "https://api.themoviedb.org/3/discover/movdie",
           {
             params: {
               api_key: "688a61fd301381e58307f7b2028291ca",
@@ -31,23 +27,21 @@ const Movies = () => {
           }
         );
 
-        setMovies(res.data.results || []); // Armazenando os filmes
-        setMoviesCount(res.data.results ? res.data.results.length : 0); // Atualizando a contagem de filmes
+        setMovies(res.data.results || []);
+        setMoviesCount(res.data.results ? res.data.results.length : 0);
       } catch (err) {
         console.error("Erro ao carregar filmes:", err);
       }
     };
 
     getMovies();
-  }, [setMoviesCount]); // O useEffect depende de 'setMoviesCount'
+  }, [setMoviesCount]);
 
   return (
-    <ul>
-      {movies.length > 0 ? (
-        movies.map((movie) => <li key={movie.id}>{movie.title}</li>)
-      ) : (
-        <li>Nenhum filme encontrado.</li>
-      )}
+    <ul className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 ">
+      {movies.map((movie) => (
+        <MoviesCards key={movie.id} movie={movie} />
+      ))}
     </ul>
   );
 };

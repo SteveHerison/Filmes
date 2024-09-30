@@ -18,10 +18,10 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <main
-      className="w-full h-full flex flex-col
-     text-white bg-gradient-to-b from-zinc-900 from-85%  to-zinc-800 to-90%"
+      className="w-full h-screen flex flex-col text-white
+     bg-gradient-to-b from-slate-900 from-80%  to-slate-600 "
     >
-      <section className="flex flex-col w-full h-full container mx-auto">
+      <section className="flex flex-col w-full h-full px-10 ">
         <Header />
         <span>Quantidade de filmes: {moviesCount}</span>
         <section className="flex-1 w-full overflow-y-auto scrollbar-thin scrollbar-thumb-transparent scrollbar-track-transparent">
