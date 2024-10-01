@@ -18,7 +18,7 @@ const Movies = () => {
     const getMovies = async () => {
       try {
         const res = await axios.get(
-          "https://api.themoviedb.org/3/discover/movdie",
+          "https://api.themoviedb.org/3/discover/movie",
           {
             params: {
               api_key: "688a61fd301381e58307f7b2028291ca",
@@ -26,14 +26,16 @@ const Movies = () => {
             },
           }
         );
-
-        setMovies(res.data.results || []);
-        setMoviesCount(res.data.results ? res.data.results.length : 0);
+        if (res.status === 200) {
+          setMovies(res.data.results || []);
+          setMoviesCount(res.data.results ? res.data.results.length : 0);
+        } else {
+          console.error(`Erro: status ${res.status}`);
+        }
       } catch (err) {
         console.error("Erro ao carregar filmes:", err);
       }
     };
-
     getMovies();
   }, [setMoviesCount]);
 

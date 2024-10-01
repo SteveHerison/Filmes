@@ -23,13 +23,13 @@ export default function MoviesCards(props: Props) {
         <img
           src={`${imageUrlBase}${movie.poster_path}`}
           alt={movie.title}
-          className="h-full w-full object-cover rounded-xl"
+          className="h-full w-full object-cover rounded-xl cursor-pointer"
         />
       </div>
 
       <div
-        className={`absolute bottom-0  flex flex-col w-full justify-center items-start bg-gradient-to-b from-zinc-900/50 to-zinc-800/80 p-2 rounded-b-xl transition-all duration-300 ${
-          isHovered ? " opacity-100" : " opacity-100"
+        className={`absolute bottom-0 h-auto flex flex-col w-full  items-start bg-gradient-to-b from-zinc-900/50 to-zinc-800/80 p-2 rounded-b-xl transition-all duration-300 ${
+          isHovered ? " opacity-100" : "opacity-100"
         }`}
       >
         <h2 className="text-white text-lg font-bold text-center">
@@ -39,7 +39,7 @@ export default function MoviesCards(props: Props) {
         <StarRating rating={movie.vote_average} />
 
         {isHovered && (
-          <div className="flex flex-col h-full justify-between gap-2">
+          <div className="flex flex-col h-full  gap-2">
             <p className="text-white text-start mt-2 transition-opacity duration-300">
               {movie.overview.length > 100
                 ? `${movie.overview.substring(0, 100)}...`
